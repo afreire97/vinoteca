@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Traits;
-use Iluminate\Support\Str;
+use Illuminate\Support\Str;
 
 trait HasSlug
 {

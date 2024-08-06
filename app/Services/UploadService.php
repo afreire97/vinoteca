@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class UploadService
 {
@@ -18,7 +19,7 @@ class UploadService
         $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
         $extension = $file->getClientOriginalExtension();
-        $filename = $filename . '-' - time() . '.' . $extension;
+        $filename = $filename . '-' . time() . '.' . $extension;
 
         return $file->storeAs($folder, $filename, $disk);
 
