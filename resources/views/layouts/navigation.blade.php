@@ -15,6 +15,19 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
+                        {{ __('Categories') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('wines.index')" :active="request()->routeIs('wines.index')">
+                        {{ __('Wines') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('shop.index')" :active="request()->routeIs('shop.index')">
+                        {{ __('Shop') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
+                        {{ __('Cart') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -70,6 +83,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->
