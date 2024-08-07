@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Wine;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -27,6 +29,8 @@ class CategoryController extends Controller
         // ray($categories);
 
 
+        ray('data' . $categories[1]);
+
         return view('wine.category.index', [
 
             'categories' => $categories,
@@ -40,14 +44,32 @@ class CategoryController extends Controller
     public function create()
     {
         //
+
+        return view('wine.category.create', [
+
+            'category' => $this->repository->model(),
+            'action' => route('categories.store'),
+            'method' => 'POST',
+            'submit' => 'Crear',
+
+
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(CategoryRequest $request)
+        {
+
+
+
+
+
+            $this->repository->create($request->validated());
+
+            return redirect()->route('categories.index');
+
     }
 
     /**
@@ -80,5 +102,10 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+
+
+        $this->repository->delete($category);
+
+        return redirect()->route('categories.index');
     }
 }

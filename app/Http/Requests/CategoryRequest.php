@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +10,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,33 +20,34 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $imageRules = 'sometimes|image|mimes:jpeg,jpg,png|max:2048';
 
-            "name" => 'required|string|max:255',
-            'description' => 'required|sring|max:2000',
-            'image' => 'sometimes|image|mimes:jpeg,jpg,png|max:2048',
+        if ($this->isMethod('post')) {
+            $imageRules = 'required|image|mimes:jpeg,jpg,png|max:2048';
+        }
+
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:2000',
+            'image' => $imageRules,
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'El nombre de la categoría es requerido.',
+            'name.string' => 'El nombre de la categoría debe ser un texto.',
+            'name.max' => 'El nombre de la categoría no debe exceder 255 caracteres.',
 
+            'description.required' => 'La descripción es requerida.',
+            'description.string' => 'La descripción debe ser un texto.',
+            'description.max' => 'La descripción no debe exceder 2000 caracteres.',
 
-    public function messages(): array{
-
-        return[
-            'name.required' => 'La categoria no es requerida',
-            'name.string' => 'La categoria debe ser un texto',
-            'name.max' => 'xx',
-
-            'description.required' => 'xx',
-            'description.string' => 'xx',
-            'description.max' => 'xx',
-
-            'image.image' => 'xx',
-            'image.mimes' => 'xx',
-            'image.max' => 'xx',
-
-
-
+            'image.required' => 'La imagen es requerida.',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.mimes' => 'La imagen debe ser de tipo jpeg, jpg o png.',
+            'image.max' => 'La imagen no debe exceder 2MB.',
         ];
     }
 }

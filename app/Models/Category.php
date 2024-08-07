@@ -4,14 +4,12 @@ namespace App\Models;
 
 use App\Traits\HasSlug;
 use App\Services\UploadService;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Category extends Model
 {
-
-
     use HasSlug;
     use HasFactory;
 
@@ -20,31 +18,17 @@ class Category extends Model
         'slug',
         'description',
         'image',
-
     ];
 
-public function wines()
-{
-    return $this->hasMany(Wine::class);
+    public function wines()
+    {
+        return $this->hasMany(Wine::class);
+    }
+
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => UploadService::url($this->image),
+        );
+    }
 }
-
-
-
-public function imageUrl() {
-
-
-return Attribute::make(
-
-fn () => UploadService::url($this->image),
-
-
-
-);
-
-
-}
-
-}
-
-
-

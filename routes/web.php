@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware('auth')->group(function () {
 
 
 // RUTAS RESOURCE (index, create, update...)

@@ -17,7 +17,8 @@ class RepositoryServiceProvider extends ServiceProvider
 
             CategoryRepositoryInterface::class,
             EloquentCategoryRepository::class,
-        );    }
+        );
+      }
 
     /**
      * Bootstrap services.
