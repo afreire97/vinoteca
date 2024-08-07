@@ -9,6 +9,8 @@ use App\Models\Category;
 use NumberFormatter;
 class Wine extends Model
 {
+
+
     use HasSlug;
 
     protected $fillable = [

@@ -4,16 +4,34 @@ namespace App\Http\Controllers\Wine;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+
+    public function __construct(private readonly CategoryRepositoryInterface $repository) {
+    }
+
+
+
     public function index()
     {
-        //
+
+        $categories = $this->repository->paginate(
+            counts: ['wines'],
+        );
+
+
+        // ray($categories);
+
+
+        return view('wine.category.index', [
+
+            'categories' => $categories,
+
+        ]);
     }
 
     /**

@@ -6,23 +6,18 @@ use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Category\EloquentCategoryRepository;
 use Illuminate\Support\ServiceProvider;
 
-class CategoryRepositoryServiceProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
      */
     public function register(): void
     {
-        //
-
         $this->app->bind(
 
             CategoryRepositoryInterface::class,
             EloquentCategoryRepository::class,
-        );
-
-
-    }
+        );    }
 
     /**
      * Bootstrap services.

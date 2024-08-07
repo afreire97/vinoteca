@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasSlug;
 use App\Services\UploadService;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -12,7 +13,7 @@ class Category extends Model
 
 
     use HasSlug;
-
+    use HasFactory;
 
     protected $fillable = [
         'name',
