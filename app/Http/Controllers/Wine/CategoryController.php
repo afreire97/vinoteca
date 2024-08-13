@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class CategoryController extends Controller
     {
 
         $categories = $this->repository->paginate(
+            
             counts: ['wines'],
         );
 
@@ -29,7 +31,7 @@ class CategoryController extends Controller
         // ray($categories);
 
 
-        ray('data' . $categories[1]);
+        // ray('data' . $categories[1]);
 
         return view('wine.category.index', [
 
@@ -63,10 +65,16 @@ class CategoryController extends Controller
         {
 
 
+            try {
+                $this->repository->create($request->validated());
+                session()->flash('success','Categoría creada');
+   
+           } catch (Exception $e) {
+               session()->flash('error', $e->getMessage());
+           }
 
 
-
-            $this->repository->create($request->validated());
+           
 
             return redirect()->route('categories.index');
 
@@ -85,15 +93,35 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+    
+        return view('wine.category.create', [
+
+            'category' => $category,
+            'action' => route('categories.update' , ['category' => $category]),
+            'method' => 'PUT',
+            'submit' => 'Editar',
+
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        
+        try {
+            $this->repository->update($request->validated(), $category);
+            session()->flash('success','Categoría editada');
+
+       } catch (Exception $e) {
+           session()->flash('error', $e->getMessage());
+       }
+
+
+        
+        return redirect()->route('categories.index');
+
     }
 
     /**
@@ -104,8 +132,16 @@ class CategoryController extends Controller
         //
 
 
-        $this->repository->delete($category);
 
+        try {
+             $this->repository->delete($category);
+             session()->flash('success','Categoría eliminada');
+
+        } catch (Exception $e) {
+            session()->flash('error', $e->getMessage());
+        }
+
+       
         return redirect()->route('categories.index');
     }
 }

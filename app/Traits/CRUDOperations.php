@@ -37,6 +37,11 @@ trait CRUDOperations {
     }
 
     public function delete($model): ?bool {
+
+        if (method_exists($this, 'deleteChecks')) {
+            $this->deleteChecks($model);
+        }
+
         UploadService::delete($model->image);
         return $model->delete();
     }

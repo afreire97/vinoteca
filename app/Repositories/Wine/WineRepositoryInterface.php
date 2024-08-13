@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Repositories\Wine;
 
-interface CategoryRepositoryInterface
+interface WineRepositoryInterface
 {
-    //
-
     public function model($slug = null);
 
     public function paginate($counts = [], $relationships = [], $perPage = 10);
@@ -15,5 +13,5 @@ interface CategoryRepositoryInterface
     public function update($data, $model);
 
     public function delete($model);
-
+    
 }

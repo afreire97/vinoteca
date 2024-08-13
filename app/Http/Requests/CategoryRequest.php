@@ -20,14 +20,25 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+
+      
         $imageRules = 'sometimes|image|mimes:jpeg,jpg,png|max:2048';
+        $nameRules ='';
 
         if ($this->isMethod('post')) {
             $imageRules = 'required|image|mimes:jpeg,jpg,png|max:2048';
+            $nameRules = 'required|string|max:255|unique:categories,name';
+
         }
 
+        if ($this->isMethod('put')) {
+            $categoryId = $this->route('category')->id;
+            $nameRules = 'required|string|max:255|unique:categories,name,' . $categoryId;
+        }
+        
+
         return [
-            'name' => 'required|string|max:255',
+            'name' => $nameRules,
             'description' => 'required|string|max:2000',
             'image' => $imageRules,
         ];
@@ -39,6 +50,9 @@ class CategoryRequest extends FormRequest
             'name.required' => 'El nombre de la categoría es requerido.',
             'name.string' => 'El nombre de la categoría debe ser un texto.',
             'name.max' => 'El nombre de la categoría no debe exceder 255 caracteres.',
+            'name.unique' => 'El nombre de la categoría no puede repetirse',
+            
+
 
             'description.required' => 'La descripción es requerida.',
             'description.string' => 'La descripción debe ser un texto.',
