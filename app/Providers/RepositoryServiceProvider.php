@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Repositories\Cart\CartRepositoryInterface;
+use App\Repositories\Cart\SessionCartRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Category\EloquentCategoryRepository;
+use App\Repositories\Shop\EloquentShopRepository;
+use App\Repositories\Shop\ShopRepositoryInterface;
 use App\Repositories\Wine\EloquentWineRepository;
 use App\Repositories\Wine\WineRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +38,22 @@ class RepositoryServiceProvider extends ServiceProvider
             EloquentWineRepository::class,
 
         );
+
+
+        $this->app->bind(
+            
+            CartRepositoryInterface::class,
+            SessionCartRepository::class,
+
+        );
+
+        $this->app->bind(
+            
+            ShopRepositoryInterface::class,
+            EloquentShopRepository::class,
+
+        );
+
       }
 
     /**
